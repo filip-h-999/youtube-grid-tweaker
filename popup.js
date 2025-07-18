@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     videoAmmount.textContent = slider.value;
   });
 
-  // Also update when slider changes (for when user releases)
+  // Update grid and save when slider changes (on release)
   slider.addEventListener("change", function () {
     videoAmmount.textContent = slider.value;
 
@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
         perRow: parseInt(slider.value),
       });
     });
+
+    // Save value to storage
+    chrome.storage.sync.set({ gridColumns: parseInt(slider.value) });
   });
 
   // Load saved value from storage
@@ -26,10 +29,5 @@ document.addEventListener("DOMContentLoaded", function () {
       slider.value = result.gridColumns;
       videoAmmount.textContent = result.gridColumns;
     }
-  });
-
-  // Save value to storage when changed
-  slider.addEventListener("change", function () {
-    chrome.storage.sync.set({ gridColumns: parseInt(slider.value) });
   });
 });

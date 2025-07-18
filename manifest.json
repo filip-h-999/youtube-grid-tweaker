@@ -17,10 +17,10 @@
 
   "content_scripts": [
     {
-      "matches": ["*://www.youtube.com/*", "*://www.youtube.com/feed/subscriptions"],
+      "matches": ["*://www.youtube.com/*"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
-  "permissions": ["activeTab", "tabs", "storage"]
+  "permissions": ["storage", "activeTab"]
 }
