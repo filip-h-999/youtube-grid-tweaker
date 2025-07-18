@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Water Popup</title>
+  </head>
+  <body>
+    <h1>Grid Adjustment</h1>
+    <img src="images/yotubeGrid48.png" id="hydrateImage" />
+    <div class="slider-container">
+      <label for="Row">Columns per Row:</label>
+      <div class="slider-wrapper">
+        <input type="range" id="RowAjuster" min="3" max="8" value="5" />
+        <span id="vidAmmount">5</span>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      width: 250px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    img {
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+    .slider-container {
+      margin: 20px 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    input[type="range"] {
+      flex: 1;
+      height: 6px;
+      background: #333;
+      outline: none;
+      border-radius: 3px;
+    }
+    #rowValue {
+      background: #333;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+    }
+  </style>
+</html>
