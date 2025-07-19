@@ -28,7 +28,16 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 | ⚡ **Real-time**         | Instant changes without page refresh            |
 | 🌐 **Universal**         | Works on all YouTube pages (home, subs, search) |
 
-## 📸 Extension Interface
+## 📷 Screenshot
+
+| **Before** | **After** |
+| :--------: | :-------: |
+|  ![][b1]   |  ![][a1]  |
+
+[b1]: assets/images/Screenshot-before.png
+[a1]: assets/images/Screenshot-after.png
+
+## Extension Interface
 
 <div align="center">
 
