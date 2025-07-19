@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Extension Preview](images/yotubeGrid48.png)
+![Extension Preview](assets/images/yotubeGrid48.png)
 
 **A Chrome extension that lets you customize YouTube's video grid layout and remove unwanted content**
 
@@ -28,13 +28,11 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 | ⚡ **Real-time**         | Instant changes without page refresh            |
 | 🌐 **Universal**         | Works on all YouTube pages (home, subs, search) |
 
-## 📸 Screenshots
+## 📸 Extension Interface
 
 <div align="center">
 
-### Extension Interface
-
-<img src="images/Screenshot.png" alt="Extension Popup" width="300">
+<img src="assets/images/Screenshot.png" alt="Extension Popup" width="300">
 
 </div>
 
