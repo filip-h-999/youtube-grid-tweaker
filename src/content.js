@@ -27,6 +27,13 @@ function removeShorts() {
     }
   });
 
+  // Remove Shorts from reel shelves(right side bar)
+  document.querySelectorAll("ytd-reel-shelf-renderer").forEach((section) => {
+    if (section.textContent.toLowerCase().includes("shorts")) {
+      section.remove();
+    }
+  }); 
+
   // Also remove any Shorts from rich shelf renderers
   document.querySelectorAll("ytd-rich-shelf-renderer").forEach((shelf) => {
     if (shelf.textContent.toLowerCase().includes("shorts")) {
@@ -38,7 +45,10 @@ function removeShorts() {
 
 function removeExploreMore() {
     document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
-      section.remove();
+      if (section.textContent.toLowerCase().includes("explore more")) {
+        // console.log("Removing Explore More section:", section);
+        section.remove();
+      }
     });
 }
 
