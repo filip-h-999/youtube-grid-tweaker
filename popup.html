@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>YouTube Grid Tweaker</title>
+    <link rel="stylesheet" href="main.css">
   </head>
   <body>
     <h1>Grid Adjustment</h1>
@@ -12,51 +13,17 @@
         <span id="vidAmmount">5</span>
       </div>
     </div>
+    <div class="remove-shorts-container">
+      <label for="removeShorts">Remove Shorts: 
+        <input type="checkbox" id="removeShorts"/>
+      </label>
+    </div>
+    <div class="remove-explore-container">
+      <label for="removeExplore">Remove Explore More: 
+        <input type="checkbox" id="removeExplore"/>
+      </label>
+    </div>
     <script src="popup.js"></script>
+    <link rel="stylesheet" href="main.css">
   </body>
-  <style>
-    body {
-      background-color: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 10px;
-      width: 250px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    img {
-      display: block;
-      margin: 0 auto 20px auto;
-    }
-    .slider-container {
-      margin: 20px 0;
-    }
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    .slider-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    input[type="range"] {
-      flex: 1;
-      height: 6px;
-      background: #333;
-      outline: none;
-      border-radius: 3px;
-    }
-    #rowValue {
-      background: #333;
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-weight: bold;
-      min-width: 20px;
-      text-align: center;
-    }
-  </style>
 </html>

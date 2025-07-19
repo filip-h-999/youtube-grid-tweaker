@@ -1,6 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
   const slider = document.getElementById("RowAjuster");
   const videoAmmount = document.getElementById("vidAmmount");
+  const removeShortsCheckbox = document.getElementById("removeShorts");
+  const removeExploreCheckbox = document.getElementById("removeExplore");
+
+  // shorts functionality
+  removeShortsCheckbox.addEventListener("change", function () {
+    // Save the checkbox state to storage
+    chrome.storage.sync.set({ removeShorts: removeShortsCheckbox.checked });
+    // Send message to content script to toggle Shorts removal
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: "toggleShorts",
+        enabled: removeShortsCheckbox.checked,
+      });
+    });
+  });
+
+  // explore more functionality
+  removeExploreCheckbox.addEventListener("change", function () {
+    // Save the checkbox state to storage
+    chrome.storage.sync.set({ removeExploreMore: removeExploreCheckbox.checked });
+    // Send message to content script to toggle Explore More removal
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: "toggleExploreMore",
+        enabled: removeExploreCheckbox.checked,
+      });
+    });
+  });
 
   // Update the displayed value when slider changes
   slider.addEventListener("input", function () {
@@ -18,16 +46,18 @@ document.addEventListener("DOMContentLoaded", function () {
         perRow: parseInt(slider.value),
       });
     });
-
     // Save value to storage
     chrome.storage.sync.set({ gridColumns: parseInt(slider.value) });
   });
 
   // Load saved value from storage
-  chrome.storage.sync.get(["gridColumns"], function (result) {
+  chrome.storage.sync.get(["gridColumns", "removeShorts", "removeExploreMore"], function (result) {
     if (result.gridColumns) {
       slider.value = result.gridColumns;
       videoAmmount.textContent = result.gridColumns;
     }
+    // Load checkbox state
+    removeShortsCheckbox.checked = result.removeShorts || false;
+    removeExploreCheckbox.checked = result.removeExploreMore || false;
   });
 });

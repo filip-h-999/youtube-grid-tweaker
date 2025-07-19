@@ -9,7 +9,7 @@ function updateGridLayout(perRow = 5) {
 function removeShorts() {
   // Remove Shorts from sidebar navigation
   document.querySelectorAll('a.yt-simple-endpoint[title="Shorts"]').forEach((el) => {
-    shorts = el.closest("ytd-guide-entry-renderer")
+    shorts = el.closest("ytd-guide-entry-renderer");
     if (shorts) shorts.remove();
   });
 
@@ -20,9 +20,9 @@ function removeShorts() {
   });
 
   // Remove Shorts sections using the better selector
-  document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
+  document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {;
     if (section.textContent.toLowerCase().includes("shorts")) {
-      console.log("Removing Shorts section:", section);
+      // console.log("Removing Shorts section:", section); 
       section.remove();
     }
   });
@@ -30,16 +30,32 @@ function removeShorts() {
   // Also remove any Shorts from rich shelf renderers
   document.querySelectorAll("ytd-rich-shelf-renderer").forEach((shelf) => {
     if (shelf.textContent.toLowerCase().includes("shorts")) {
-      console.log("Removing Shorts shelf:", shelf);
+      // console.log("Removing Shorts shelf:", shelf);
       shelf.remove();
     }
   });
 }
 
+function removeExploreMore() {
+    document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
+      section.remove();
+    });
+}
+
 // Load saved value from storage and apply it
-chrome.storage.sync.get(["gridColumns"], function (result) {
+chrome.storage.sync.get(["gridColumns", "removeShorts", "removeExploreMore"], function (result) {
   const columns = result.gridColumns || 5;
+  const shouldRemoveShorts = result.removeShorts || false;
+  const shouldRemoveExploreMore = result.removeExploreMore || false;
+
   updateGridLayout(columns);
+
+  if (shouldRemoveShorts) {
+    removeShorts();
+  }
+  if (shouldRemoveExploreMore) {
+    removeExploreMore();
+  }
 });
 
 // Listen for messages from popup
@@ -47,17 +63,35 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "updateGrid") {
     updateGridLayout(request.perRow);
   }
+  if (request.action === "toggleShorts") {
+    if (request.enabled) {
+      removeShorts();
+    }
+  }
+  if (request.action === "toggleExploreMore") {
+    if (request.enabled) {
+      removeExploreMore();
+    }
+  }
 });
 
 // observe for dynamic youTube page changes
 const observer = new MutationObserver(() => {
-  chrome.storage.sync.get(["gridColumns"], function (result) {
+  chrome.storage.sync.get(["gridColumns", "removeShorts", "removeExploreMore"], function (result) {
     const columns = result.gridColumns || 5;
-    updateGridLayout(columns);
-  });
+    const shouldRemoveShorts = result.removeShorts || false;
+    const shouldRemoveExploreMore = result.removeExploreMore || false;
 
-  // Also remove Shorts when page content changes
-  removeShorts();
+    updateGridLayout(columns);
+
+    // Remove Shorts when page content changes if enabled
+    if (shouldRemoveShorts) {
+      removeShorts();
+    }
+    if (shouldRemoveExploreMore) {
+      removeExploreMore();
+    }
+  });
 });
 
 observer.observe(document.body, {
