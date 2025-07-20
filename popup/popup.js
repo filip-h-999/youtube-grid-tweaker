@@ -3,9 +3,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const videoAmmount = document.getElementById("vidAmmount");
   const removeShortsCheckbox = document.getElementById("removeShorts");
   const removeExploreCheckbox = document.getElementById("removeExplore");
+  const customAlert = document.getElementById("customAlert");
+
+  // Custom alert function
+  function showCustomAlert() {
+    // Show alert with animation
+    customAlert.classList.add("show");
+
+    // Hide alert after 3 seconds
+    setTimeout(() => {
+      customAlert.classList.remove("show");
+    }, 3000);
+  }
 
   // shorts functionality
   removeShortsCheckbox.addEventListener("change", function () {
+    // Show custom alert when unchecking
+    if (!removeShortsCheckbox.checked) {
+      showCustomAlert();
+    }
     // Save the checkbox state to storage
     chrome.storage.sync.set({ removeShorts: removeShortsCheckbox.checked });
     // Send message to content script to toggle Shorts removal
@@ -19,6 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // explore more functionality
   removeExploreCheckbox.addEventListener("change", function () {
+    // Show custom alert when unchecking
+    if (!removeExploreCheckbox.checked) {
+      showCustomAlert();
+    }
     // Save the checkbox state to storage
     chrome.storage.sync.set({ removeExploreMore: removeExploreCheckbox.checked });
     // Send message to content script to toggle Explore More removal
