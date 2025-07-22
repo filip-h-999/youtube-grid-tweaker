@@ -6,7 +6,7 @@
 
 **A Chrome extension that lets you customize YouTube's video grid layout and remove unwanted content**
 [![GitHub Stars](https://img.shields.io/github/stars/filip-h-999/youtube-grid-tweaker?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/stargazers)
-[![Version](https://img.shields.io/badge/version-1.0.0-success?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/releases)
+[![Version](https://img.shields.io/badge/version-1.1-success?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 </div>
