@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YouTube Grid Tweaker",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Customize YouTube layout, including grid size (videos per row) and video appearance and remove Shorts and Explore More sections for less distraction.",
 
   "icons": {
