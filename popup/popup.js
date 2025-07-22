@@ -28,8 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Custom alert function
   function showCustomAlert() {
     // Show alert with animation
-    customAlert.classList.add("show");
-
+    // only on shorts and explore more
+    if (!removeShortsCheckbox.checked || !removeExploreCheckbox.checked) {
+      customAlert.classList.add("show");
+    }
     // Hide alert after 3 seconds
     setTimeout(() => {
       customAlert.classList.remove("show");

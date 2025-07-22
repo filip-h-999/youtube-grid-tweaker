@@ -61,24 +61,23 @@ function removeChannelName() {
 
 function removeViews() {
   // Remove view counts from video listings
-  document.querySelectorAll(
-      "ytd-video-meta-block:not([inline-badges]) #metadata-line.ytd-video-meta-block span.ytd-video-meta-block"
-    ).forEach((span) => {
-      if (span.textContent.includes("views")) {
-        span.style.display = "none";
-      }
-    });
+  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
+    if (span.textContent && span.textContent.includes("views")) {
+      span.style.display = "none";
+    }
+  });
 }
 
 function removeTimePosted() {
   // Remove time posted from video listings
-  document.querySelectorAll(
-      "ytd-video-meta-block:not([inline-badges]) #metadata-line.ytd-video-meta-block span.ytd-video-meta-block"
-    ).forEach((span) => {
-      if (span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)) {
-        span.style.display = "none";
-      }
-    });
+  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
+    if (
+      span.textContent &&
+      span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
+    ) {
+      span.style.display = "none";
+    }
+  });
 }
 
 // Load saved value from storage and apply it
@@ -128,25 +127,49 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.enabled) {
       removeShorts();
     }
+    // Note: Cannot restore removed Shorts elements, page refresh needed
   }
   if (request.action === "toggleExploreMore") {
     if (request.enabled) {
       removeExploreMore();
     }
+    // Note: Cannot restore removed Explore More elements, page refresh needed
   }
   if (request.action === "toggleChannelNames") {
     if (request.enabled) {
       removeChannelName();
+    } else {
+      // Restore channel names by showing them again
+      document.querySelectorAll("#channel-name").forEach((channel) => {
+        channel.style.display = "";
+      });
     }
   }
   if (request.action === "toggleViews") {
     if (request.enabled) {
       removeViews();
+    } else {
+      // Restore views by showing them again
+      document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
+        if (span.textContent && span.textContent.includes("views")) {
+          span.style.display = "";
+        }
+      });
     }
   }
   if (request.action === "toggleTimePosted") {
     if (request.enabled) {
       removeTimePosted();
+    } else {
+      // Restore time posted by showing them again
+      document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
+        if (
+          span.textContent &&
+          span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
+        ) {
+          span.style.display = "";
+        }
+      });
     }
   }
 });
