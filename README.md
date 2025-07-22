@@ -5,10 +5,10 @@
 ![Extension Preview](assets/images/yotubeGrid48.png)
 
 **A Chrome extension that lets you customize YouTube's video grid layout and remove unwanted content**
-
-[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://chrome.google.com/webstore)
+[![GitHub Stars](https://img.shields.io/github/stars/filip-h-999/youtube-grid-tweaker?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/stargazers)
 [![Version](https://img.shields.io/badge/version-1.0.0-success?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
 </div>
 
 ---
@@ -19,14 +19,19 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 
 ### ⚡ Key Features
 
-| Feature                  | Description                                     |
-| ------------------------ | ----------------------------------------------- |
-| 🎛️ **Grid Control**      | Adjust video columns from 3-8 per row           |
-| 🚫 **Content Filtering** | Remove Shorts and "Explore More" sections       |
-| 💾 **Smart Memory**      | Settings persist across browser sessions        |
-| 🎨 **Modern UI**         | Beautiful glassmorphism design with animations  |
-| ⚡ **Real-time**         | Instant changes without page refresh            |
-| 🌐 **Universal**         | Works on all YouTube pages (home, subs, search) |
+| Feature                    | Description                                     |
+| -------------------------- | ----------------------------------------------- |
+| 🎛️ **Grid Control**        | Adjust video columns from 3-8 per row           |
+| 🚫 **Remove Shorts**       | Hide Shorts from sidebar, sections, and shelves |
+| 🔍 **Remove Explore More** | Clean up "Explore More" sections                |
+| 👤 **Hide Channel Names**  | Remove channel names from video listings        |
+| 👁️ **Hide View Counts**    | Remove view counts from videos                  |
+| ⏰ **Hide Time Posted**    | Remove "X hours/days ago" timestamps            |
+| 💾 **Smart Memory**        | Settings persist across browser sessions        |
+| 🎨 **Modern UI**           | Beautiful glassmorphism design with animations  |
+| ⚡ **Real-time Updates**   | Changes apply instantly without page refresh    |
+| 🔄 **Dynamic Detection**   | Works with YouTube's dynamic content loading    |
+| 🌐 **Universal Coverage**  | Works on all YouTube pages (home, subs, search) |
 
 ## 📷 Screenshot
 
@@ -41,7 +46,7 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 
 <div align="center">
 
-<img src="assets/images/Screenshot.png" alt="Extension Popup" width="300">
+<img src="assets/images/screenshot2.png" alt="Extension Popup" width="300">
 
 </div>
 
@@ -65,9 +70,17 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 
 1. **Navigate** to YouTube.com
 2. **Click** the extension icon in your toolbar
-3. **Adjust** the slider to change columns (3-8)
-4. **Toggle** checkboxes to filter content
+3. **Customize your experience**:
+   - **Grid Layout**: Adjust the slider to change columns (3-8)
+   - **Remove Shorts**: Toggle to hide all Shorts content
+   - **Remove Explore More**: Toggle to hide "Explore More" sections
+   - **Hide Channel Names**: Toggle to hide channel names from videos
+   - **Hide Views**: Toggle to hide view counts
+   - **Hide Time Posted**: Toggle to hide "X hours/days ago" timestamps
+4. **Restore content**: Simply uncheck any option to bring content back
 5. **Enjoy** your customized YouTube experience!
+
+> **Note**: Some features (Shorts, Explore More) require a page refresh to restore, while others (Channel Names, Views, Time Posted) can be toggled on/off instantly.
 
 ## 📄 License
 
