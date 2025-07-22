@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "YouTube Grid Tweaker",
   "version": "1.1",
-  "description": "Customize YouTube layout, including grid size (videos per row) and video appearance and remove Shorts and Explore More sections for less distraction.",
+  "description": "A Chrome extension that lets you customize YouTube's video grid layout and remove unwanted content.",
 
   "icons": {
     "16": "assets/images/yotubeGrid16.png",
