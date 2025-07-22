@@ -14,18 +14,45 @@
         <span id="vidAmmount">5</span>
       </div>
     </div>
-    <div class="remove-shorts-container">
-      <label for="removeShorts"
-        >Remove Shorts:
-        <input type="checkbox" id="removeShorts" />
-      </label>
+    <div class="view-options-container">
+      <div class="dropdown-header" id="viewOptionsToggle">
+        <span>View Options</span>
+        <span class="dropdown-arrow">^</span>
+      </div>
+      <div class="dropdown-content" id="viewOptionsContent">
+        <div class="checkbox-item">
+          <label for="removeShorts">
+            Remove Shorts:
+            <input type="checkbox" id="removeShorts" />
+          </label>
+        </div>
+        <div class="checkbox-item">
+          <label for="removeExplore">
+            Remove Explore More:
+            <input type="checkbox" id="removeExplore" />
+          </label>
+        </div>
+        <div class="checkbox-item">
+          <label for="removeChannelNames">
+            Remove Channel Names:
+            <input type="checkbox" id="removeChannelNames" />
+          </label>
+        </div>
+        <div class="checkbox-item">
+          <label for="removeViews">
+            Remove Views:
+            <input type="checkbox" id="removeViews" />
+          </label>
+        </div>
+        <div class="checkbox-item">
+          <label for="removeTimePosted">
+            Remove Time Posted:
+            <input type="checkbox" id="removeTimePosted" />
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="remove-explore-container">
-      <label for="removeExplore"
-        >Remove Explore More:
-        <input type="checkbox" id="removeExplore" />
-      </label>
-    </div>
+
     <script src="popup.js"></script>
     <link rel="stylesheet" href="main.css" />
   </body>

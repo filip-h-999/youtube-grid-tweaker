@@ -20,9 +20,9 @@ function removeShorts() {
   });
 
   // Remove Shorts sections using the better selector
-  document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {;
+  document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
     if (section.textContent.toLowerCase().includes("shorts")) {
-      // console.log("Removing Shorts section:", section); 
+      // console.log("Removing Shorts section:", section);
       section.remove();
     }
   });
@@ -32,7 +32,7 @@ function removeShorts() {
     if (section.textContent.toLowerCase().includes("shorts")) {
       section.remove();
     }
-  }); 
+  });
 
   // Also remove any Shorts from rich shelf renderers
   document.querySelectorAll("ytd-rich-shelf-renderer").forEach((shelf) => {
@@ -44,29 +44,80 @@ function removeShorts() {
 }
 
 function removeExploreMore() {
-    document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
-      if (section.textContent.toLowerCase().includes("explore more")) {
-        // console.log("Removing Explore More section:", section);
-        section.remove();
+  document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
+    if (section.textContent.toLowerCase().includes("explore more")) {
+      // console.log("Removing Explore More section:", section);
+      section.remove();
+    }
+  });
+}
+
+function removeChannelName() {
+  // Remove channel names
+  document.querySelectorAll("#channel-name").forEach((channel) => {
+    channel.style.display = "none";
+  });
+}
+
+function removeViews() {
+  // Remove view counts from video listings
+  document.querySelectorAll(
+      "ytd-video-meta-block:not([inline-badges]) #metadata-line.ytd-video-meta-block span.ytd-video-meta-block"
+    ).forEach((span) => {
+      if (span.textContent.includes("views")) {
+        span.style.display = "none";
+      }
+    });
+}
+
+function removeTimePosted() {
+  // Remove time posted from video listings
+  document.querySelectorAll(
+      "ytd-video-meta-block:not([inline-badges]) #metadata-line.ytd-video-meta-block span.ytd-video-meta-block"
+    ).forEach((span) => {
+      if (span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)) {
+        span.style.display = "none";
       }
     });
 }
 
 // Load saved value from storage and apply it
-chrome.storage.sync.get(["gridColumns", "removeShorts", "removeExploreMore"], function (result) {
-  const columns = result.gridColumns || 5;
-  const shouldRemoveShorts = result.removeShorts || false;
-  const shouldRemoveExploreMore = result.removeExploreMore || false;
+chrome.storage.sync.get(
+  [
+    "gridColumns",
+    "removeShorts",
+    "removeExploreMore",
+    "removeChannelNames",
+    "removeViews",
+    "removeTimePosted",
+  ],
+  function (result) {
+    const columns = result.gridColumns || 5;
+    const shouldRemoveShorts = result.removeShorts || false;
+    const shouldRemoveExploreMore = result.removeExploreMore || false;
+    const shouldRemoveChannelNames = result.removeChannelNames || false;
+    const shouldRemoveViews = result.removeViews || false;
+    const shouldRemoveTimePosted = result.removeTimePosted || false;
 
-  updateGridLayout(columns);
+    updateGridLayout(columns);
 
-  if (shouldRemoveShorts) {
-    removeShorts();
+    if (shouldRemoveShorts) {
+      removeShorts();
+    }
+    if (shouldRemoveExploreMore) {
+      removeExploreMore();
+    }
+    if (shouldRemoveChannelNames) {
+      removeChannelName();
+    }
+    if (shouldRemoveViews) {
+      removeViews();
+    }
+    if (shouldRemoveTimePosted) {
+      removeTimePosted();
+    }
   }
-  if (shouldRemoveExploreMore) {
-    removeExploreMore();
-  }
-});
+);
 
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -83,25 +134,62 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       removeExploreMore();
     }
   }
+  if (request.action === "toggleChannelNames") {
+    if (request.enabled) {
+      removeChannelName();
+    }
+  }
+  if (request.action === "toggleViews") {
+    if (request.enabled) {
+      removeViews();
+    }
+  }
+  if (request.action === "toggleTimePosted") {
+    if (request.enabled) {
+      removeTimePosted();
+    }
+  }
 });
 
 // observe for dynamic youTube page changes
 const observer = new MutationObserver(() => {
-  chrome.storage.sync.get(["gridColumns", "removeShorts", "removeExploreMore"], function (result) {
-    const columns = result.gridColumns || 5;
-    const shouldRemoveShorts = result.removeShorts || false;
-    const shouldRemoveExploreMore = result.removeExploreMore || false;
+  chrome.storage.sync.get(
+    [
+      "gridColumns",
+      "removeShorts",
+      "removeExploreMore",
+      "removeChannelNames",
+      "removeViews",
+      "removeTimePosted",
+    ],
+    function (result) {
+      const columns = result.gridColumns || 5;
+      const shouldRemoveShorts = result.removeShorts || false;
+      const shouldRemoveExploreMore = result.removeExploreMore || false;
+      const shouldRemoveChannelNames = result.removeChannelNames || false;
+      const shouldRemoveViews = result.removeViews || false;
+      const shouldRemoveTimePosted = result.removeTimePosted || false;
 
-    updateGridLayout(columns);
+      updateGridLayout(columns);
 
-    // Remove Shorts when page content changes if enabled
-    if (shouldRemoveShorts) {
-      removeShorts();
+      // Remove content when page changes if enabled
+      if (shouldRemoveShorts) {
+        removeShorts();
+      }
+      if (shouldRemoveExploreMore) {
+        removeExploreMore();
+      }
+      if (shouldRemoveChannelNames) {
+        removeChannelName();
+      }
+      if (shouldRemoveViews) {
+        removeViews();
+      }
+      if (shouldRemoveTimePosted) {
+        removeTimePosted();
+      }
     }
-    if (shouldRemoveExploreMore) {
-      removeExploreMore();
-    }
-  });
+  );
 });
 
 observer.observe(document.body, {
