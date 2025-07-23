@@ -80,8 +80,12 @@ function removeTimePosted() {
   });
 }
 
+if (typeof browser === "undefined") {
+  var browser = chrome;
+}
+
 // Load saved value from storage and apply it
-chrome.storage.sync.get(
+browser.storage.sync.get(
   [
     "gridColumns",
     "removeShorts",
@@ -119,7 +123,7 @@ chrome.storage.sync.get(
 );
 
 // Listen for messages from popup
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "updateGrid") {
     updateGridLayout(request.perRow);
   }
@@ -176,7 +180,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 // observe for dynamic youTube page changes
 const observer = new MutationObserver(() => {
-  chrome.storage.sync.get(
+  browser.storage.sync.get(
     [
       "gridColumns",
       "removeShorts",
