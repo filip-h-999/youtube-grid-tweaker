@@ -25,9 +25,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Save settings to storage
+  function saveSettingsToStorage(remove, removeCheckbox, toggel) {
+    chrome.storage.sync.set({ [remove]: removeCheckbox.checked });
+    // Send message to content script to toggle Shorts removal
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: toggel,
+        enabled: removeCheckbox.checked,
+      });
+    });
+  }
+
   // Custom alert function
   function showCustomAlert() {
-    // Show alert with animation
     // only on shorts and explore more
     if (!removeShortsCheckbox.checked || !removeExploreCheckbox.checked) {
       customAlert.classList.add("show");
@@ -44,83 +55,36 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!removeShortsCheckbox.checked) {
       showCustomAlert();
     }
-    // Save the checkbox state to storage
-    chrome.storage.sync.set({ removeShorts: removeShortsCheckbox.checked });
-    // Send message to content script to toggle Shorts removal
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: "toggleShorts",
-        enabled: removeShortsCheckbox.checked,
-      });
-    });
+    saveSettingsToStorage("removeShorts", removeShortsCheckbox, "toggleShorts");
   });
 
-  // explore more functionality
   removeExploreCheckbox.addEventListener("change", function () {
     // Show custom alert when unchecking
     if (!removeExploreCheckbox.checked) {
       showCustomAlert();
     }
-    // Save the checkbox state to storage
-    chrome.storage.sync.set({ removeExploreMore: removeExploreCheckbox.checked });
-    // Send message to content script to toggle Explore More removal
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: "toggleExploreMore",
-        enabled: removeExploreCheckbox.checked,
-      });
-    });
+    saveSettingsToStorage("removeExploreMore", removeExploreCheckbox, "toggleExploreMore");
   });
 
-  // channel names functionality
   removeChannelNamesCheckbox.addEventListener("change", function () {
-    // Show custom alert when unchecking
     if (!removeChannelNamesCheckbox.checked) {
       showCustomAlert();
     }
-    // Save the checkbox state to storage
-    chrome.storage.sync.set({ removeChannelNames: removeChannelNamesCheckbox.checked });
-    // Send message to content script to toggle Channel Names removal
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: "toggleChannelNames",
-        enabled: removeChannelNamesCheckbox.checked,
-      });
-    });
+    saveSettingsToStorage("removeChannelNames", removeChannelNamesCheckbox, "toggleChannelNames");
   });
 
-  // views functionality
   removeViewsCheckbox.addEventListener("change", function () {
-    // Show custom alert when unchecking
     if (!removeViewsCheckbox.checked) {
       showCustomAlert();
     }
-    // Save the checkbox state to storage
-    chrome.storage.sync.set({ removeViews: removeViewsCheckbox.checked });
-    // Send message to content script to toggle Views removal
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: "toggleViews",
-        enabled: removeViewsCheckbox.checked,
-      });
-    });
+    saveSettingsToStorage("removeViews", removeViewsCheckbox, "toggleViews");
   });
 
-  // time posted functionality
   removeTimePostedCheckbox.addEventListener("change", function () {
-    // Show custom alert when unchecking
     if (!removeTimePostedCheckbox.checked) {
       showCustomAlert();
     }
-    // Save the checkbox state to storage
-    chrome.storage.sync.set({ removeTimePosted: removeTimePostedCheckbox.checked });
-    // Send message to content script to toggle Time Posted removal
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        action: "toggleTimePosted",
-        enabled: removeTimePostedCheckbox.checked,
-      });
-    });
+    saveSettingsToStorage("removeTimePosted", removeTimePostedCheckbox, "toggleTimePosted");
   });
 
   // Update the displayed value when slider changes

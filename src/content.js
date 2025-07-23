@@ -6,85 +6,114 @@ function updateGridLayout(perRow = 5) {
   });
 }
 
+function removeElements(config) {
+  const { selector, textIncludes, action = "remove", closest, attribute, customCheck } = config;
+
+  document.querySelectorAll(selector).forEach((element) => {
+    let shouldProcess = true;
+
+    // Check if text content should include specific text
+    if (textIncludes) {
+      shouldProcess = element.textContent.toLowerCase().includes(textIncludes.toLowerCase());
+    }
+
+    // Check if element has specific attribute value
+    if (attribute && shouldProcess) {
+      shouldProcess = element.getAttribute(attribute.name) === attribute.value;
+    }
+
+    // Check custom condition
+    if (customCheck && shouldProcess) {
+      shouldProcess = customCheck(element);
+    }
+
+    if (shouldProcess) {
+      // Find the target element
+      const targetElement = closest ? element.closest(closest) : element;
+
+      if (targetElement) {
+        if (action === "remove") {
+          targetElement.remove();
+        } else if (action === "hide") {
+          targetElement.style.display = "none";
+        } else if (action === "show") {
+          targetElement.style.display = "";
+        }
+      }
+    }
+  });
+}
+
 function removeShorts() {
   // Remove Shorts from sidebar navigation
-  document.querySelectorAll('a.yt-simple-endpoint[title="Shorts"]').forEach((el) => {
-    const shorts = el.closest("ytd-guide-entry-renderer");
-    if (shorts) shorts.remove();
+  removeElements({
+    selector: "a.yt-simple-endpoint",
+    attribute: { name: "title", value: "Shorts" },
+    closest: "ytd-guide-entry-renderer",
   });
 
   // Also remove any other Shorts links
-  document.querySelectorAll('a[title="Shorts"]').forEach((el) => {
-    const shorts = el.closest("ytd-guide-entry-renderer, ytd-mini-guide-entry-renderer");
-    if (shorts) shorts.remove();
+  removeElements({
+    selector: 'a[title="Shorts"]',
+    closest: "ytd-guide-entry-renderer, ytd-mini-guide-entry-renderer",
   });
 
-  // Remove Shorts sections using the better selector
-  document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
-    if (section.textContent.toLowerCase().includes("shorts")) {
-      section.remove();
-    }
+  // Remove Shorts sections
+  removeElements({
+    selector: "ytd-rich-section-renderer",
+    textIncludes: "shorts",
   });
 
-  // Remove Shorts from reel shelves (right side bar)
-  document.querySelectorAll("ytd-reel-shelf-renderer").forEach((section) => {
-    if (section.textContent.toLowerCase().includes("shorts")) {
-      section.remove();
-    }
-  });
-
-  // Also remove any Shorts from rich shelf renderers
-  document.querySelectorAll("ytd-rich-shelf-renderer").forEach((shelf) => {
-    if (shelf.textContent.toLowerCase().includes("shorts")) {
-      shelf.remove();
-    }
+  // Remove Shorts from shelves
+  removeElements({
+    selector: "ytd-rich-shelf-renderer",
+    textIncludes: "shorts",
   });
 }
 
 function removeExploreMore() {
-  document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
-    if (section.textContent.toLowerCase().includes("explore more")) {
-      section.remove();
-    }
+  removeElements({
+    selector: "ytd-rich-section-renderer",
+    textIncludes: "explore more",
   });
 }
 
 function removeChannelName() {
-  // Remove channel names
-  document.querySelectorAll("#channel-name").forEach((channel) => {
-    channel.style.display = "none";
+  removeElements({
+    selector: "#channel-name",
+    action: "hide",
   });
 }
 
 function removeViews() {
-  // Remove view counts from video listings
-  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
-    if (span.textContent && span.textContent.includes("views")) {
-      span.style.display = "none";
-    }
+  removeElements({
+    selector: "ytd-video-meta-block #metadata-line span",
+    textIncludes: "views",
+    action: "hide",
   });
 }
 
 function removeTimePosted() {
-  // Remove time posted from video listings
-  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
-    if (
-      span.textContent &&
-      span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
-    ) {
-      span.style.display = "none";
-    }
+  removeElements({
+    selector: "ytd-video-meta-block #metadata-line span",
+    action: "hide",
+    customCheck: (element) => {
+      return (
+        element.textContent &&
+        element.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
+      );
+    },
   });
 }
 
 // Function to apply all features based on storage settings
-function applyAllFeatures(result) {
-  const columns = result.gridColumns || 5;
-  const shouldRemoveShorts = result.removeShorts || false;
-  const shouldRemoveExploreMore = result.removeExploreMore || false;
-  const shouldRemoveChannelNames = result.removeChannelNames || false;
-  const shouldRemoveViews = result.removeViews || false;
-  const shouldRemoveTimePosted = result.removeTimePosted || false;
+function applyAllFeatures(parms) {
+  const columns = parms.gridColumns || 5;
+  const shouldRemoveShorts = parms.removeShorts || false;
+  const shouldRemoveExploreMore = parms.removeExploreMore || false;
+  const shouldRemoveChannelNames = parms.removeChannelNames || false;
+  const shouldRemoveViews = parms.removeViews || false;
+  const shouldRemoveTimePosted = parms.removeTimePosted || false;
 
   updateGridLayout(columns);
 
@@ -107,27 +136,30 @@ function applyAllFeatures(result) {
 
 // Helper functions for toggling features
 function toggleChannelNames(enabled) {
-  document.querySelectorAll("#channel-name").forEach((channel) => {
-    channel.style.display = enabled ? "none" : "";
+  removeElements({
+    selector: "#channel-name",
+    action: enabled ? "hide" : "show",
   });
 }
 
 function toggleViews(enabled) {
-  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
-    if (span.textContent && span.textContent.includes("views")) {
-      span.style.display = enabled ? "none" : "";
-    }
+  removeElements({
+    selector: "ytd-video-meta-block #metadata-line span",
+    textIncludes: "views",
+    action: enabled ? "hide" : "show",
   });
 }
 
 function toggleTimePosted(enabled) {
-  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
-    if (
-      span.textContent &&
-      span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
-    ) {
-      span.style.display = enabled ? "none" : "";
-    }
+  removeElements({
+    selector: "ytd-video-meta-block #metadata-line span",
+    action: enabled ? "hide" : "show",
+    customCheck: (element) => {
+      return (
+        element.textContent &&
+        element.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
+      );
+    },
   });
 }
 
