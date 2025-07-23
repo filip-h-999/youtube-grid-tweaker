@@ -78,34 +78,6 @@ function removeExploreMore() {
   });
 }
 
-// Function to apply all features based on storage settings
-function applyAllFeatures(params) {
-  const columns = params.gridColumns || 5;
-  const shouldRemoveShorts = params.removeShorts || false;
-  const shouldRemoveExploreMore = params.removeExploreMore || false;
-  const shouldRemoveChannelNames = params.removeChannelNames || false;
-  const shouldRemoveViews = params.removeViews || false;
-  const shouldRemoveTimePosted = params.removeTimePosted || false;
-
-  updateGridLayout(columns);
-
-  if (shouldRemoveShorts) {
-    removeShorts();
-  }
-  if (shouldRemoveExploreMore) {
-    removeExploreMore();
-  }
-  if (shouldRemoveChannelNames) {
-    toggleChannelNames(true);
-  }
-  if (shouldRemoveViews) {
-    toggleViews(true);
-  }
-  if (shouldRemoveTimePosted) {
-    toggleTimePosted(true);
-  }
-}
-
 // Helper functions for toggling features
 function toggleChannelNames(enabled) {
   removeElements({
@@ -162,6 +134,34 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     handler(request);
   }
 });
+
+// Function to apply all features based on storage settings
+function applyAllFeatures(params) {
+  const columns = params.gridColumns || 5;
+  const shouldRemoveShorts = params.removeShorts || false;
+  const shouldRemoveExploreMore = params.removeExploreMore || false;
+  const shouldRemoveChannelNames = params.removeChannelNames || false;
+  const shouldRemoveViews = params.removeViews || false;
+  const shouldRemoveTimePosted = params.removeTimePosted || false;
+
+  updateGridLayout(columns);
+
+  if (shouldRemoveShorts) {
+    removeShorts();
+  }
+  if (shouldRemoveExploreMore) {
+    removeExploreMore();
+  }
+  if (shouldRemoveChannelNames) {
+    toggleChannelNames(true);
+  }
+  if (shouldRemoveViews) {
+    toggleViews(true);
+  }
+  if (shouldRemoveTimePosted) {
+    toggleTimePosted(true);
+  }
+}
 
 // Observe for dynamic YouTube page changes
 const observer = new MutationObserver(() => {
