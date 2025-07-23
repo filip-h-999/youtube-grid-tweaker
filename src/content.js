@@ -69,6 +69,12 @@ function removeShorts() {
     selector: "ytd-reel-shelf-renderer",
     textIncludes: "shorts",
   });
+
+  // Remove Shorts from search
+  removeElements({
+    selector: "grid-shelf-view-model",
+    textIncludes: "shorts",
+  });
 }
 
 function removeExploreMore() {
