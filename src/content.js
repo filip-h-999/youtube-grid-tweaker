@@ -66,7 +66,7 @@ function removeShorts() {
 
   // Remove Shorts from shelves
   removeElements({
-    selector: "ytd-rich-shelf-renderer",
+    selector: "ytd-reel-shelf-renderer",
     textIncludes: "shorts",
   });
 }
