@@ -9,25 +9,24 @@ function updateGridLayout(perRow = 5) {
 function removeShorts() {
   // Remove Shorts from sidebar navigation
   document.querySelectorAll('a.yt-simple-endpoint[title="Shorts"]').forEach((el) => {
-    shorts = el.closest("ytd-guide-entry-renderer");
+    const shorts = el.closest("ytd-guide-entry-renderer");
     if (shorts) shorts.remove();
   });
 
   // Also remove any other Shorts links
   document.querySelectorAll('a[title="Shorts"]').forEach((el) => {
-    shorts = el.closest("ytd-guide-entry-renderer, ytd-mini-guide-entry-renderer");
+    const shorts = el.closest("ytd-guide-entry-renderer, ytd-mini-guide-entry-renderer");
     if (shorts) shorts.remove();
   });
 
   // Remove Shorts sections using the better selector
   document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
     if (section.textContent.toLowerCase().includes("shorts")) {
-      // console.log("Removing Shorts section:", section);
       section.remove();
     }
   });
 
-  // Remove Shorts from reel shelves(right side bar)
+  // Remove Shorts from reel shelves (right side bar)
   document.querySelectorAll("ytd-reel-shelf-renderer").forEach((section) => {
     if (section.textContent.toLowerCase().includes("shorts")) {
       section.remove();
@@ -37,7 +36,6 @@ function removeShorts() {
   // Also remove any Shorts from rich shelf renderers
   document.querySelectorAll("ytd-rich-shelf-renderer").forEach((shelf) => {
     if (shelf.textContent.toLowerCase().includes("shorts")) {
-      // console.log("Removing Shorts shelf:", shelf);
       shelf.remove();
     }
   });
@@ -46,7 +44,6 @@ function removeShorts() {
 function removeExploreMore() {
   document.querySelectorAll("ytd-rich-section-renderer").forEach((section) => {
     if (section.textContent.toLowerCase().includes("explore more")) {
-      // console.log("Removing Explore More section:", section);
       section.remove();
     }
   });
@@ -80,107 +77,91 @@ function removeTimePosted() {
   });
 }
 
-if (typeof browser === "undefined") {
-  var browser = chrome;
+// Function to apply all features based on storage settings
+function applyAllFeatures(result) {
+  const columns = result.gridColumns || 5;
+  const shouldRemoveShorts = result.removeShorts || false;
+  const shouldRemoveExploreMore = result.removeExploreMore || false;
+  const shouldRemoveChannelNames = result.removeChannelNames || false;
+  const shouldRemoveViews = result.removeViews || false;
+  const shouldRemoveTimePosted = result.removeTimePosted || false;
+
+  updateGridLayout(columns);
+
+  if (shouldRemoveShorts) {
+    removeShorts();
+  }
+  if (shouldRemoveExploreMore) {
+    removeExploreMore();
+  }
+  if (shouldRemoveChannelNames) {
+    removeChannelName();
+  }
+  if (shouldRemoveViews) {
+    removeViews();
+  }
+  if (shouldRemoveTimePosted) {
+    removeTimePosted();
+  }
 }
 
-// Load saved value from storage and apply it
-browser.storage.sync.get(
-  [
-    "gridColumns",
-    "removeShorts",
-    "removeExploreMore",
-    "removeChannelNames",
-    "removeViews",
-    "removeTimePosted",
-  ],
-  function (result) {
-    const columns = result.gridColumns || 5;
-    const shouldRemoveShorts = result.removeShorts || false;
-    const shouldRemoveExploreMore = result.removeExploreMore || false;
-    const shouldRemoveChannelNames = result.removeChannelNames || false;
-    const shouldRemoveViews = result.removeViews || false;
-    const shouldRemoveTimePosted = result.removeTimePosted || false;
+// Helper functions for toggling features
+function toggleChannelNames(enabled) {
+  document.querySelectorAll("#channel-name").forEach((channel) => {
+    channel.style.display = enabled ? "none" : "";
+  });
+}
 
-    updateGridLayout(columns);
+function toggleViews(enabled) {
+  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
+    if (span.textContent && span.textContent.includes("views")) {
+      span.style.display = enabled ? "none" : "";
+    }
+  });
+}
 
-    if (shouldRemoveShorts) {
-      removeShorts();
+function toggleTimePosted(enabled) {
+  document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
+    if (
+      span.textContent &&
+      span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
+    ) {
+      span.style.display = enabled ? "none" : "";
     }
-    if (shouldRemoveExploreMore) {
-      removeExploreMore();
-    }
-    if (shouldRemoveChannelNames) {
-      removeChannelName();
-    }
-    if (shouldRemoveViews) {
-      removeViews();
-    }
-    if (shouldRemoveTimePosted) {
-      removeTimePosted();
-    }
-  }
-);
+  });
+}
 
-// Listen for messages from popup
-browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "updateGrid") {
-    updateGridLayout(request.perRow);
-  }
-  if (request.action === "toggleShorts") {
+// Action handlers
+const MESSAGE_HANDLERS = {
+  updateGrid: (request) => updateGridLayout(request.perRow),
+  toggleShorts: (request) => {
     if (request.enabled) {
       removeShorts();
     }
     // Note: Cannot restore removed Shorts elements, page refresh needed
-  }
-  if (request.action === "toggleExploreMore") {
+  },
+  toggleExploreMore: (request) => {
     if (request.enabled) {
       removeExploreMore();
     }
     // Note: Cannot restore removed Explore More elements, page refresh needed
-  }
-  if (request.action === "toggleChannelNames") {
-    if (request.enabled) {
-      removeChannelName();
-    } else {
-      // Restore channel names by showing them again
-      document.querySelectorAll("#channel-name").forEach((channel) => {
-        channel.style.display = "";
-      });
-    }
-  }
-  if (request.action === "toggleViews") {
-    if (request.enabled) {
-      removeViews();
-    } else {
-      // Restore views by showing them again
-      document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
-        if (span.textContent && span.textContent.includes("views")) {
-          span.style.display = "";
-        }
-      });
-    }
-  }
-  if (request.action === "toggleTimePosted") {
-    if (request.enabled) {
-      removeTimePosted();
-    } else {
-      // Restore time posted by showing them again
-      document.querySelectorAll("ytd-video-meta-block #metadata-line span").forEach((span) => {
-        if (
-          span.textContent &&
-          span.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
-        ) {
-          span.style.display = "";
-        }
-      });
-    }
+  },
+  toggleChannelNames: (request) => toggleChannelNames(request.enabled),
+  toggleViews: (request) => toggleViews(request.enabled),
+  toggleTimePosted: (request) => toggleTimePosted(request.enabled),
+};
+
+// Listen for messages from popup
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  const handler = MESSAGE_HANDLERS[request.action];
+  if (handler) {
+    handler(request);
   }
 });
 
-// observe for dynamic youTube page changes
+// Observe for dynamic YouTube page changes
 const observer = new MutationObserver(() => {
-  browser.storage.sync.get(
+  chrome.storage.sync.get(
     [
       "gridColumns",
       "removeShorts",
@@ -189,33 +170,7 @@ const observer = new MutationObserver(() => {
       "removeViews",
       "removeTimePosted",
     ],
-    function (result) {
-      const columns = result.gridColumns || 5;
-      const shouldRemoveShorts = result.removeShorts || false;
-      const shouldRemoveExploreMore = result.removeExploreMore || false;
-      const shouldRemoveChannelNames = result.removeChannelNames || false;
-      const shouldRemoveViews = result.removeViews || false;
-      const shouldRemoveTimePosted = result.removeTimePosted || false;
-
-      updateGridLayout(columns);
-
-      // Remove content when page changes if enabled
-      if (shouldRemoveShorts) {
-        removeShorts();
-      }
-      if (shouldRemoveExploreMore) {
-        removeExploreMore();
-      }
-      if (shouldRemoveChannelNames) {
-        removeChannelName();
-      }
-      if (shouldRemoveViews) {
-        removeViews();
-      }
-      if (shouldRemoveTimePosted) {
-        removeTimePosted();
-      }
-    }
+    applyAllFeatures
   );
 });
 
