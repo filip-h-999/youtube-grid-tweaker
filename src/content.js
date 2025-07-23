@@ -78,42 +78,14 @@ function removeExploreMore() {
   });
 }
 
-function removeChannelName() {
-  removeElements({
-    selector: "#channel-name",
-    action: "hide",
-  });
-}
-
-function removeViews() {
-  removeElements({
-    selector: "ytd-video-meta-block #metadata-line span",
-    textIncludes: "views",
-    action: "hide",
-  });
-}
-
-function removeTimePosted() {
-  removeElements({
-    selector: "ytd-video-meta-block #metadata-line span",
-    action: "hide",
-    customCheck: (element) => {
-      return (
-        element.textContent &&
-        element.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
-      );
-    },
-  });
-}
-
 // Function to apply all features based on storage settings
-function applyAllFeatures(parms) {
-  const columns = parms.gridColumns || 5;
-  const shouldRemoveShorts = parms.removeShorts || false;
-  const shouldRemoveExploreMore = parms.removeExploreMore || false;
-  const shouldRemoveChannelNames = parms.removeChannelNames || false;
-  const shouldRemoveViews = parms.removeViews || false;
-  const shouldRemoveTimePosted = parms.removeTimePosted || false;
+function applyAllFeatures(params) {
+  const columns = params.gridColumns || 5;
+  const shouldRemoveShorts = params.removeShorts || false;
+  const shouldRemoveExploreMore = params.removeExploreMore || false;
+  const shouldRemoveChannelNames = params.removeChannelNames || false;
+  const shouldRemoveViews = params.removeViews || false;
+  const shouldRemoveTimePosted = params.removeTimePosted || false;
 
   updateGridLayout(columns);
 
@@ -124,13 +96,13 @@ function applyAllFeatures(parms) {
     removeExploreMore();
   }
   if (shouldRemoveChannelNames) {
-    removeChannelName();
+    toggleChannelNames(true);
   }
   if (shouldRemoveViews) {
-    removeViews();
+    toggleViews(true);
   }
   if (shouldRemoveTimePosted) {
-    removeTimePosted();
+    toggleTimePosted(true);
   }
 }
 
