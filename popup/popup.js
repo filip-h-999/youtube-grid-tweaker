@@ -1,3 +1,7 @@
+if (typeof browser === "undefined") {
+  var browser = chrome;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const slider = document.getElementById("RowAjuster");
   const videoAmmount = document.getElementById("vidAmmount");
@@ -27,10 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Save settings to storage
   function saveSettingsToStorage(remove, removeCheckbox, toggel) {
-    chrome.storage.sync.set({ [remove]: removeCheckbox.checked });
+    browser.storage.local.set({ [remove]: removeCheckbox.checked });
     // Send message to content script to toggle Shorts removal
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
+    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      browser.tabs.sendMessage(tabs[0].id, {
         action: toggel,
         enabled: removeCheckbox.checked,
       });
@@ -97,18 +101,18 @@ document.addEventListener("DOMContentLoaded", function () {
     videoAmmount.textContent = slider.value;
 
     // Send message to content script to update YouTube grid
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {
+    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      browser.tabs.sendMessage(tabs[0].id, {
         action: "updateGrid",
         perRow: parseInt(slider.value),
       });
     });
     // Save value to storage
-    chrome.storage.sync.set({ gridColumns: parseInt(slider.value) });
+    browser.storage.local.set({ gridColumns: parseInt(slider.value) });
   });
 
   // Load saved value from storage
-  chrome.storage.sync.get(
+  browser.storage.local.get(
     [
       "gridColumns",
       "removeShorts",

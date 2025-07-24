@@ -1,3 +1,7 @@
+if (typeof browser === "undefined") {
+  var browser = chrome;
+}
+
 function updateGridLayout(perRow = 5) {
   // Find ALL grid renderers on the page, not just the first one
   const grids = document.querySelectorAll("ytd-rich-grid-renderer");
@@ -134,7 +138,7 @@ const MESSAGE_HANDLERS = {
 };
 
 // Listen for messages from popup
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   const handler = MESSAGE_HANDLERS[request.action];
   if (handler) {
     handler(request);
@@ -171,7 +175,7 @@ function applyAllFeatures(params) {
 
 // Observe for dynamic YouTube page changes
 const observer = new MutationObserver(() => {
-  chrome.storage.sync.get(
+  browser.storage.local.get(
     [
       "gridColumns",
       "removeShorts",
