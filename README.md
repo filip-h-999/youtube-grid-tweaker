@@ -4,7 +4,7 @@
 
 ![Extension Preview](assets/images/yotubeGrid48.png)
 
-**A Chrome extension that lets you customize YouTube's video grid layout and remove unwanted content**
+**A browser extension that lets you customize YouTube's video grid layout and remove unwanted content**
 [![GitHub Stars](https://img.shields.io/github/stars/filip-h-999/youtube-grid-tweaker?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/stargazers)
 [![Version](https://img.shields.io/badge/version-1.2-success?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -19,19 +19,20 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 
 ### ⚡ Key Features
 
-| Feature                    | Description                                     |
-| -------------------------- | ----------------------------------------------- |
-| 🎛️ **Grid Control**        | Adjust video columns from 3-8 per row           |
-| 🚫 **Remove Shorts**       | Hide Shorts from sidebar, sections, and shelves |
-| 🔍 **Remove Explore More** | Clean up "Explore More" sections                |
-| 👤 **Hide Channel Names**  | Remove channel names from video listings        |
-| 👁️ **Hide View Counts**    | Remove view counts from videos                  |
-| ⏰ **Hide Time Posted**    | Remove "X hours/days ago" timestamps            |
-| 💾 **Smart Memory**        | Settings persist across browser sessions        |
-| 🎨 **Modern UI**           | Beautiful glassmorphism design with animations  |
-| ⚡ **Real-time Updates**   | Changes apply instantly without page refresh    |
-| 🔄 **Dynamic Detection**   | Works with YouTube's dynamic content loading    |
-| 🌐 **Universal Coverage**  | Works on all YouTube pages (home, subs, search) |
+| Feature                    | Description                                       |
+| -------------------------- | ------------------------------------------------- |
+| 🎛️ **Grid Control**        | Adjust video columns from 3-8 per row             |
+| 🚫 **Remove Shorts**       | Hide Shorts from sidebar, sections, and shelves   |
+| 🔍 **Remove Explore More** | Clean up "Explore More" sections                  |
+| 👤 **Hide Channel Names**  | Remove channel names from video listings          |
+| 👁️ **Hide View Counts**    | Remove view counts from videos                    |
+| ⏰ **Hide Time Posted**    | Remove "X hours/days ago" timestamps              |
+| 💾 **Smart Memory**        | Settings persist across browser sessions          |
+| 🎨 **Modern UI**           | Beautiful glassmorphism design with animations    |
+| ⚡ **Real-time Updates**   | Changes apply instantly without page refresh      |
+| 🔄 **Dynamic Detection**   | Works with YouTube's dynamic content loading      |
+| 🌐 **Universal Coverage**  | Works on all YouTube pages (home, subs, search)   |
+| 🌍 **Cross-Browser**       | Tested on Chrome & Firefox, compatible with Edge+ |
 
 ## 📷 Screenshot
 
@@ -52,6 +53,10 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 
 ## Installation
 
+### Chrome & Chromium-based browsers (Edge, Brave, Opera, etc.)
+
+> **Note**: Tested on Chrome. Edge, Brave, and Opera should work as they use the same engine, but haven't been fully tested.
+
 1. **Download**: Clone or download this repository
 
    ```bash
@@ -60,16 +65,31 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
 
 2. **Install**:
 
-   - Open Chrome → `chrome://extensions/`
+   - Open your browser's extensions page:
+     - **Chrome**: `chrome://extensions/`
+     - **Edge**: `edge://extensions/`
+     - **Brave**: `brave://extensions/`
+     - **Opera**: `opera://extensions/`
    - Enable "Developer mode"
    - Click "Load unpacked" → Select the extension folder
 
 3. **Use**: Click the extension icon on any YouTube page!
 
+### Firefox
+
+1. **Download**: Clone or download this repository
+2. **Install**:
+   - Open Firefox → `about:debugging`
+   - Click "This Firefox" → "Load Temporary Add-on"
+   - Select the `manifest.json` file from the extension folder
+3. **Use**: Click the extension icon on any YouTube page!
+
+> **Note**: Firefox installation is temporary and will be removed when you restart the browser. For permanent installation, the extension would need to be packaged and signed.
+
 ## 📖 How to Use
 
 1. **Navigate** to YouTube.com
-2. **Click** the extension icon in your toolbar
+2. **Click** the extension icon in your browser toolbar
 3. **Customize your experience**:
    - **Grid Layout**: Adjust the slider to change columns (3-8)
    - **Remove Shorts**: Toggle to hide all Shorts content
@@ -89,6 +109,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
 
 **Made with ❤️ for the YouTube community**
+
+**Tested on Chrome & Firefox • Should work on Edge, Brave, Opera**
 
 ⭐ **Star this repository if you found it helpful!** ⭐
 
