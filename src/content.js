@@ -139,9 +139,17 @@ const MESSAGE_HANDLERS = {
 
 // Listen for messages from popup
 browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  const handler = MESSAGE_HANDLERS[request.action];
-  if (handler) {
-    handler(request);
+  try {
+    const handler = MESSAGE_HANDLERS[request.action];
+    if (handler) {
+      handler(request);
+    }
+  } catch (error) {
+    if (error.message.includes("Extension context invalidated")) {
+      console.log("Extension context invalidated, ignoring message");
+    } else {
+      console.error("Error in message handler:", error);
+    }
   }
 });
 
@@ -175,17 +183,31 @@ function applyAllFeatures(params) {
 
 // Observe for dynamic YouTube page changes
 const observer = new MutationObserver(() => {
-  browser.storage.local.get(
-    [
-      "gridColumns",
-      "removeShorts",
-      "removeExploreMore",
-      "removeChannelNames",
-      "removeViews",
-      "removeTimePosted",
-    ],
-    applyAllFeatures
-  );
+  try {
+    // Check if extension context is still valid before accessing storage
+    if (!browser.runtime?.id) {
+      observer.disconnect();
+      return;
+    }
+
+    browser.storage.local.get(
+      [
+        "gridColumns",
+        "removeShorts",
+        "removeExploreMore",
+        "removeChannelNames",
+        "removeViews",
+        "removeTimePosted",
+      ],
+      applyAllFeatures
+    );
+  } catch (error) {
+    if (error.message.includes("Extension context invalidated")) {
+      observer.disconnect();
+    } else {
+      console.error("Error in mutation observer:", error);
+    }
+  }
 });
 
 observer.observe(document.body, {
