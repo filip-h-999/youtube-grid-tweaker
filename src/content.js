@@ -90,30 +90,63 @@ function removeExploreMore() {
 
 // Helper functions for toggling features
 function toggleChannelNames(enabled) {
-  removeElements({
-    selector: "#channel-name",
-    action: enabled ? "hide" : "show",
+  // Try both old and new selectors for channel names
+  const channelSelectors = [
+    "#channel-name",
+    "#channel-name a",
+    "ytd-channel-name a",
+    ".yt-content-metadata-view-model__metadata-row a[href*='/@']",
+    ".yt-content-metadata-view-model__metadata-row a[href*='/channel/']"
+  ];
+  
+  channelSelectors.forEach(selector => {
+    removeElements({
+      selector: selector,
+      action: enabled ? "hide" : "show",
+    });
   });
 }
 
 function toggleViews(enabled) {
-  removeElements({
-    selector: "ytd-video-meta-block #metadata-line span",
-    textIncludes: "views",
-    action: enabled ? "hide" : "show",
+  // Updated selectors for the new YouTube structure
+  const viewSelectors = [
+    "ytd-video-meta-block #metadata-line span",
+    ".yt-content-metadata-view-model__metadata-row span",
+    ".yt-content-metadata-view-model__metadata-row",
+    "#metadata-line span",
+    ".ytd-video-meta-block span"
+  ];
+  
+  viewSelectors.forEach(selector => {
+    removeElements({
+      selector: selector,
+      textIncludes: "view",
+      action: enabled ? "hide" : "show",
+    });
   });
 }
 
 function toggleTimePosted(enabled) {
-  removeElements({
-    selector: "ytd-video-meta-block #metadata-line span",
-    action: enabled ? "hide" : "show",
-    customCheck: (element) => {
-      return (
-        element.textContent &&
-        element.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
-      );
-    },
+  // Updated selectors for the new YouTube structure
+  const timeSelectors = [
+    "ytd-video-meta-block #metadata-line span",
+    ".yt-content-metadata-view-model__metadata-row span",
+    ".yt-content-metadata-view-model__metadata-row",
+    "#metadata-line span",
+    ".ytd-video-meta-block span"
+  ];
+  
+  timeSelectors.forEach(selector => {
+    removeElements({
+      selector: selector,
+      action: enabled ? "hide" : "show",
+      customCheck: (element) => {
+        return (
+          element.textContent &&
+          element.textContent.match(/\d+\s+(second|minute|hour|day|week|month|year)s?\s+ago/)
+        );
+      },
+    });
   });
 }
 
