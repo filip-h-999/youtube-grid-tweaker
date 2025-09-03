@@ -8,6 +8,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/filip-h-999/youtube-grid-tweaker?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/stargazers)
 [![Version](https://img.shields.io/badge/version-1.2-success?style=for-the-badge)](https://github.com/filip-h-999/youtube-grid-tweaker/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bmabdnjhhbljnmgcoifkeehkcjfhjjif?style=for-the-badge&label=Chrome%20Web%20Store)](https://chrome.google.com/webstore/detail/bmabdnjhhbljnmgcoifkeehkcjfhjjif)
 
 </div>
 
