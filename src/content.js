@@ -88,6 +88,13 @@ function removeExploreMore() {
   });
 }
 
+function removeMostRelevantSubPage(){
+  removeElements({
+    selector: "ytd-rich-shelf-renderer",
+    textIncludes: "most relevant",
+  })
+}
+
 // Helper functions for toggling features
 function toggleChannelNames(enabled) {
   // Try both old and new selectors for channel names
@@ -165,6 +172,11 @@ const MESSAGE_HANDLERS = {
     }
     // Note: Cannot restore removed Explore More elements, page refresh needed
   },
+  toggleMostRelevant: (request) => {
+    if (request.enabled){
+      removeMostRelevantSubPage();
+    }
+  },
   toggleChannelNames: (request) => toggleChannelNames(request.enabled),
   toggleViews: (request) => toggleViews(request.enabled),
   toggleTimePosted: (request) => toggleTimePosted(request.enabled),
@@ -194,6 +206,7 @@ function applyAllFeatures(params) {
   const shouldRemoveChannelNames = params.removeChannelNames || false;
   const shouldRemoveViews = params.removeViews || false;
   const shouldRemoveTimePosted = params.removeTimePosted || false;
+  const shouldRemoveMostRelevant = params.removeMostRelevantSubPage || false;
 
   updateGridLayout(columns);
 
@@ -211,6 +224,9 @@ function applyAllFeatures(params) {
   }
   if (shouldRemoveTimePosted) {
     toggleTimePosted(true);
+  }
+  if (shouldRemoveMostRelevant){
+    removeMostRelevantSubPage();
   }
 }
 
@@ -231,6 +247,7 @@ const observer = new MutationObserver(() => {
         "removeChannelNames",
         "removeViews",
         "removeTimePosted",
+        "removeMostRelevantSubPage"
       ],
       applyAllFeatures
     );
