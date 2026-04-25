@@ -249,7 +249,7 @@ input[type="checkbox"]:hover {
 }
 
 .dropdown-content.expanded {
-  max-height: 300px;
+  max-height: 500px;
 }
 
 .checkbox-item {
