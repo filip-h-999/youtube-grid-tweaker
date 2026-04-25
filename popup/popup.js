@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const videoAmmount = document.getElementById("vidAmmount");
   const removeShortsCheckbox = document.getElementById("removeShorts");
   const removeExploreCheckbox = document.getElementById("removeExplore");
-  const removeChannelNamesCheckbox = document.getElementById("removeChannelNames");
-  const removeViewsCheckbox = document.getElementById("removeViews");
-  const removeTimePostedCheckbox = document.getElementById("removeTimePosted");
+  // const removeChannelNamesCheckbox = document.getElementById("removeChannelNames");
+  // const removeViewsCheckbox = document.getElementById("removeViews");
+  // const removeTimePostedCheckbox = document.getElementById("removeTimePosted");
   const removeMostRelevantSubPageCheckbox = document.getElementById("removeMostRelevantSubPage");
   const removeYoutubeFeaturedCheckbox = document.getElementById("removeYoutubeFeatured");
   const customAlert = document.getElementById("customAlert");
@@ -72,26 +72,26 @@ document.addEventListener("DOMContentLoaded", function () {
     saveSettingsToStorage("removeExploreMore", removeExploreCheckbox, "toggleExploreMore");
   });
 
-  removeChannelNamesCheckbox.addEventListener("change", function () {
-    if (!removeChannelNamesCheckbox.checked) {
-      showCustomAlert();
-    }
-    saveSettingsToStorage("removeChannelNames", removeChannelNamesCheckbox, "toggleChannelNames");
-  });
+  // removeChannelNamesCheckbox.addEventListener("change", function () {
+  //   if (!removeChannelNamesCheckbox.checked) {
+  //     showCustomAlert();
+  //   }
+  //   saveSettingsToStorage("removeChannelNames", removeChannelNamesCheckbox, "toggleChannelNames");
+  // });
 
-  removeViewsCheckbox.addEventListener("change", function () {
-    if (!removeViewsCheckbox.checked) {
-      showCustomAlert();
-    }
-    saveSettingsToStorage("removeViews", removeViewsCheckbox, "toggleViews");
-  });
+  // removeViewsCheckbox.addEventListener("change", function () {
+  //   if (!removeViewsCheckbox.checked) {
+  //     showCustomAlert();
+  //   }
+  //   saveSettingsToStorage("removeViews", removeViewsCheckbox, "toggleViews");
+  // });
 
-  removeTimePostedCheckbox.addEventListener("change", function () {
-    if (!removeTimePostedCheckbox.checked) {
-      showCustomAlert();
-    }
-    saveSettingsToStorage("removeTimePosted", removeTimePostedCheckbox, "toggleTimePosted");
-  });
+  // removeTimePostedCheckbox.addEventListener("change", function () {
+  //   if (!removeTimePostedCheckbox.checked) {
+  //     showCustomAlert();
+  //   }
+  //   saveSettingsToStorage("removeTimePosted", removeTimePostedCheckbox, "toggleTimePosted");
+  // });
 
   removeMostRelevantSubPageCheckbox.addEventListener("change", function () {
     if (!removeMostRelevantSubPageCheckbox.checked) {
@@ -141,9 +141,9 @@ document.addEventListener("DOMContentLoaded", function () {
       "gridColumns",
       "removeShorts",
       "removeExploreMore",
-      "removeChannelNames",
-      "removeViews",
-      "removeTimePosted",
+      // "removeChannelNames",
+      // "removeViews",
+      // "removeTimePosted",
       "removeMostRelevantSubPage",
       "removeYoutubeFeatured",
     ],
@@ -155,9 +155,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // Load checkbox state
       removeShortsCheckbox.checked = result.removeShorts || false;
       removeExploreCheckbox.checked = result.removeExploreMore || false;
-      removeChannelNamesCheckbox.checked = result.removeChannelNames || false;
-      removeViewsCheckbox.checked = result.removeViews || false;
-      removeTimePostedCheckbox.checked = result.removeTimePosted || false;
+      // removeChannelNamesCheckbox.checked = result.removeChannelNames || false;
+      // removeViewsCheckbox.checked = result.removeViews || false;
+      // removeTimePostedCheckbox.checked = result.removeTimePosted || false;
       removeMostRelevantSubPageCheckbox.checked = result.removeMostRelevantSubPage || false;
       removeYoutubeFeaturedCheckbox.checked = result.removeYoutubeFeatured || false;
     },

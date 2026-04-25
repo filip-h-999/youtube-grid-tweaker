@@ -70,7 +70,7 @@ function removeShorts() {
 
   // Remove Shorts from shelves
   removeElements({
-    selector: "ytd-reel-shelf-renderer",
+    selector: "ytd-rich-section-renderer.style-scope.ytd-rich-grid-renderer",
     textIncludes: "shorts",
   });
 
@@ -83,23 +83,23 @@ function removeShorts() {
 
 function removeExploreMore() {
   removeElements({
-    selector: "ytd-rich-section-renderer",
+    selector: "ytd-rich-section-renderer.style-scope.ytd-rich-grid-renderer",
     textIncludes: "explore more",
   });
 }
 
-function removeMostRelevantSubPage(){
+function removeMostRelevantSubPage() {
   removeElements({
     selector: "ytd-rich-shelf-renderer",
     textIncludes: "most relevant",
-  })
+  });
 }
 
-function removeYoutubeFeatured(){
+function removeYoutubeFeatured() {
   removeElements({
-    selector: "style-scope ytd-rich-section-renderer",
+    selector: "ytd-rich-section-renderer.style-scope.ytd-rich-grid-renderer",
     textIncludes: "Youtube featured",
-  })
+  });
 }
 
 // Helper functions for toggling features
@@ -128,10 +128,10 @@ function toggleViews(enabled) {
     ".yt-content-metadata-view-model__metadata-row span",
     ".yt-content-metadata-view-model__metadata-row",
     "#metadata-line span",
-    ".ytd-video-meta-block span"
+    ".ytd-video-meta-block span",
   ];
-  
-  viewSelectors.forEach(selector => {
+
+  viewSelectors.forEach((selector) => {
     removeElements({
       selector: selector,
       textIncludes: "view",
@@ -147,10 +147,10 @@ function toggleTimePosted(enabled) {
     ".yt-content-metadata-view-model__metadata-row span",
     ".yt-content-metadata-view-model__metadata-row",
     "#metadata-line span",
-    ".ytd-video-meta-block span"
+    ".ytd-video-meta-block span",
   ];
-  
-  timeSelectors.forEach(selector => {
+
+  timeSelectors.forEach((selector) => {
     removeElements({
       selector: selector,
       action: enabled ? "hide" : "show",
@@ -180,13 +180,13 @@ const MESSAGE_HANDLERS = {
     // Note: Cannot restore removed Explore More elements, page refresh needed
   },
   toggleMostRelevant: (request) => {
-    if (request.enabled){
+    if (request.enabled) {
       removeMostRelevantSubPage();
     }
     // Note: Cannot restore removed Most Relevant elements, page refresh needed
   },
   toggleYoutubeFeatured: (request) => {
-    if (request.enabled){
+    if (request.enabled) {
       removeYoutubeFeatured();
     }
     // Note: Cannot restore removed Youtube Featured elements, page refresh needed
@@ -240,10 +240,10 @@ function applyAllFeatures(params) {
   if (shouldRemoveTimePosted) {
     toggleTimePosted(true);
   }
-  if (shouldRemoveMostRelevant){
+  if (shouldRemoveMostRelevant) {
     removeMostRelevantSubPage();
   }
-  if (shouldRemoveYoutubeFeatured){
+  if (shouldRemoveYoutubeFeatured) {
     removeYoutubeFeatured();
   }
 }
@@ -268,7 +268,7 @@ const observer = new MutationObserver(() => {
         "removeMostRelevantSubPage",
         "removeYoutubeFeatured",
       ],
-      applyAllFeatures
+      applyAllFeatures,
     );
   } catch (error) {
     if (error.message.includes("Extension context invalidated")) {
