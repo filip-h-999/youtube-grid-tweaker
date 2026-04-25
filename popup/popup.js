@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const removeViewsCheckbox = document.getElementById("removeViews");
   const removeTimePostedCheckbox = document.getElementById("removeTimePosted");
   const removeMostRelevantSubPageCheckbox = document.getElementById("removeMostRelevantSubPage");
+  const removeYoutubeFeaturedCheckbox = document.getElementById("removeYoutubeFeatured");
   const customAlert = document.getElementById("customAlert");
 
   // Dropdown elements
@@ -96,7 +97,22 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!removeMostRelevantSubPageCheckbox.checked) {
       showCustomAlert();
     }
-    saveSettingsToStorage("removeMostRelevantSubPage",removeMostRelevantSubPageCheckbox,"toggleMostRelevant");
+    saveSettingsToStorage(
+      "removeMostRelevantSubPage",
+      removeMostRelevantSubPageCheckbox,
+      "toggleMostRelevant",
+    );
+  });
+
+  removeYoutubeFeaturedCheckbox.addEventListener("change", function () {
+    if (!removeYoutubeFeaturedCheckbox.checked) {
+      showCustomAlert();
+    }
+    saveSettingsToStorage(
+      "removeYoutubeFeatured",
+      removeYoutubeFeaturedCheckbox,
+      "toggleYoutubeFeatured",
+    );
   });
 
   // Update the displayed value when slider changes
@@ -129,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "removeViews",
       "removeTimePosted",
       "removeMostRelevantSubPage",
+      "removeYoutubeFeatured",
     ],
     function (result) {
       if (result.gridColumns) {
@@ -142,6 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
       removeViewsCheckbox.checked = result.removeViews || false;
       removeTimePostedCheckbox.checked = result.removeTimePosted || false;
       removeMostRelevantSubPageCheckbox.checked = result.removeMostRelevantSubPage || false;
-    }
+      removeYoutubeFeaturedCheckbox.checked = result.removeYoutubeFeatured || false;
+    },
   );
 });

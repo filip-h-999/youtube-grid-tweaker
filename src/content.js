@@ -95,6 +95,13 @@ function removeMostRelevantSubPage(){
   })
 }
 
+function removeYoutubeFeatured(){
+  removeElements({
+    selector: "style-scope ytd-rich-section-renderer",
+    textIncludes: "Youtube featured",
+  })
+}
+
 // Helper functions for toggling features
 function toggleChannelNames(enabled) {
   // Try both old and new selectors for channel names
@@ -176,6 +183,13 @@ const MESSAGE_HANDLERS = {
     if (request.enabled){
       removeMostRelevantSubPage();
     }
+    // Note: Cannot restore removed Most Relevant elements, page refresh needed
+  },
+  toggleYoutubeFeatured: (request) => {
+    if (request.enabled){
+      removeYoutubeFeatured();
+    }
+    // Note: Cannot restore removed Youtube Featured elements, page refresh needed
   },
   toggleChannelNames: (request) => toggleChannelNames(request.enabled),
   toggleViews: (request) => toggleViews(request.enabled),
@@ -207,6 +221,7 @@ function applyAllFeatures(params) {
   const shouldRemoveViews = params.removeViews || false;
   const shouldRemoveTimePosted = params.removeTimePosted || false;
   const shouldRemoveMostRelevant = params.removeMostRelevantSubPage || false;
+  const shouldRemoveYoutubeFeatured = params.removeYoutubeFeatured || false;
 
   updateGridLayout(columns);
 
@@ -228,6 +243,9 @@ function applyAllFeatures(params) {
   if (shouldRemoveMostRelevant){
     removeMostRelevantSubPage();
   }
+  if (shouldRemoveYoutubeFeatured){
+    removeYoutubeFeatured();
+  }
 }
 
 // Observe for dynamic YouTube page changes
@@ -247,7 +265,8 @@ const observer = new MutationObserver(() => {
         "removeChannelNames",
         "removeViews",
         "removeTimePosted",
-        "removeMostRelevantSubPage"
+        "removeMostRelevantSubPage",
+        "removeYoutubeFeatured",
       ],
       applyAllFeatures
     );
