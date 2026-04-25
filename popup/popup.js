@@ -36,17 +36,41 @@ document.addEventListener("DOMContentLoaded", function () {
     browser.storage.local.set({ [remove]: removeCheckbox.checked });
     // Send message to content script to toggle Shorts removal
     browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      browser.tabs.sendMessage(tabs[0].id, {
-        action: toggel,
-        enabled: removeCheckbox.checked,
-      });
+      const activeTab = tabs && tabs[0];
+      if (!activeTab?.id) {
+        return;
+      }
+
+      // Content script only exists on YouTube pages
+      if (!activeTab.url || !activeTab.url.includes("youtube.com")) {
+        return;
+      }
+
+      browser.tabs.sendMessage(
+        activeTab.id,
+        {
+          action: toggel,
+          enabled: removeCheckbox.checked,
+        },
+        function () {
+          // Ignore when popup is opened on a page without an active receiver
+          if (browser.runtime.lastError) {
+            console.debug("Message not delivered:", browser.runtime.lastError.message);
+          }
+        },
+      );
     });
   }
 
   // Custom alert function
   function showCustomAlert() {
     // only on shorts and explore more
-    if (!removeShortsCheckbox.checked || !removeExploreCheckbox.checked) {
+    if (
+      !removeShortsCheckbox.checked ||
+      !removeExploreCheckbox.checked ||
+      !removeMostRelevantSubPageCheckbox.checked ||
+      !removeYoutubeFeaturedCheckbox.checked
+    ) {
       customAlert.classList.add("show");
     }
     // Hide alert after 3 seconds
