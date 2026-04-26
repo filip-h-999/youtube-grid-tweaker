@@ -16,24 +16,23 @@
 
 ## 🚀 Quick Overview
 
-YouTube Grid Tweaker transforms your YouTube browsing experience by giving you complete control over how videos are displayed. Customize the number of video in a row, remove distracting content like Shorts, and enjoy a cleaner, more personalized YouTube interface.
+YouTube Grid Tweaker transforms your YouTube browsing experience by giving you complete control over how videos are displayed. Customize the number of videos in a row, remove distracting content like Shorts, and enjoy a cleaner, more personalized YouTube interface.
 
 ### ⚡ Key Features
 
-| Feature                    | Description                                       |
-| -------------------------- | ------------------------------------------------- |
-| 🎛️ **Grid Control**        | Adjust video columns from 3-8 per row             |
-| 🚫 **Remove Shorts**       | Hide Shorts from sidebar, sections, and shelves   |
-| 🔍 **Remove Explore More** | Clean up "Explore More" sections                  |
-| 👤 **Hide Channel Names**  | Remove channel names from video listings          |
-| 👁️ **Hide View Counts**    | Remove view counts from videos                    |
-| ⏰ **Hide Time Posted**    | Remove "X hours/days ago" timestamps              |
-| 💾 **Smart Memory**        | Settings persist across browser sessions          |
-| 🎨 **Modern UI**           | Beautiful glassmorphism design with animations    |
-| ⚡ **Real-time Updates**   | Changes apply instantly without page refresh      |
-| 🔄 **Dynamic Detection**   | Works with YouTube's dynamic content loading      |
-| 🌐 **Universal Coverage**  | Works on all YouTube pages (home, subs, search)   |
-| 🌍 **Cross-Browser**       | Tested on Chrome & Firefox, compatible with Edge+ |
+| Feature                        | Description                                       |
+| ------------------------------ | ------------------------------------------------- |
+| 🎛️ **Grid Control**            | Adjust video columns from 3-8 per row             |
+| 🚫 **Remove Shorts**           | Hide Shorts from sidebar, sections, and shelves   |
+| 🔍 **Remove Explore More**     | Clean up "Explore More" sections                  |
+| 🧭 **Remove Most Relevant**    | Hide "Most Relevant" shelf sections               |
+| ⭐ **Remove YouTube Featured** | Hide "YouTube Featured" sections                  |
+| 💾 **Smart Memory**            | Settings persist across browser sessions          |
+| 🎨 **Modern UI**               | Beautiful glassmorphism design with animations    |
+| ⚡ **Real-time Updates**       | Changes apply instantly without page refresh      |
+| 🔄 **Dynamic Detection**       | Works with YouTube's dynamic content loading      |
+| 🌐 **Universal Coverage**      | Works on all YouTube pages (home, subs, search)   |
+| 🌍 **Cross-Browser**           | Tested on Chrome & Firefox, compatible with Edge+ |
 
 ## 📷 Screenshot
 
@@ -65,7 +64,6 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
    ```
 
 2. **Install**:
-
    - Open your browser's extensions page:
      - **Chrome**: `chrome://extensions/`
      - **Edge**: `edge://extensions/`
@@ -95,13 +93,14 @@ YouTube Grid Tweaker transforms your YouTube browsing experience by giving you c
    - **Grid Layout**: Adjust the slider to change columns (3-8)
    - **Remove Shorts**: Toggle to hide all Shorts content
    - **Remove Explore More**: Toggle to hide "Explore More" sections
-   - **Hide Channel Names**: Toggle to hide channel names from videos
-   - **Hide Views**: Toggle to hide view counts
-   - **Hide Time Posted**: Toggle to hide "X hours/days ago" timestamps
+   - **Remove Most Relevant**: Toggle to hide "Most Relevant" sections
+   - **Remove YouTube Featured**: Toggle to hide "YouTube Featured" sections
 4. **Restore content**: Simply uncheck any option to bring content back
 5. **Enjoy** your customized YouTube experience!
 
-> **Note**: Some features (Shorts, Explore More) require a page refresh to restore, while others (Channel Names, Views, Time Posted) can be toggled on/off instantly.
+> **Note**: Section-removal features (Shorts, Explore More, Most Relevant, YouTube Featured) require a page refresh to restore content after disabling.
+
+> **Note**: `Hide Channel Names`, `Hide Views`, and `Hide Time Posted` are currently commented out in the popup UI. They are not removed from the codebase and can be re-enabled later.
 
 ## 📄 License
 
